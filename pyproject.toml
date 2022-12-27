@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "library-service-api"
+version = "0.1.0"
+description = ""
+authors = ["Volodymyr Vereshchak <volodymyr.vereshchak@gmail.com>"]
+readme = "README.md"
+packages = [{include = "library_service_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.1.4"
+djangorestframework = "^3.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
