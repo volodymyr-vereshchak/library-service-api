@@ -20,4 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("book.urls", namespace="book")),
     path("users/", include("user.urls", namespace="user")),
+    path("", include("borrowing.urls", namespace="borrow")),
 ]
