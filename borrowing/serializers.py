@@ -8,6 +8,7 @@ from .telegram import TelegramBot
 
 class BorrowSerializer(serializers.ModelSerializer):
     user = serializers.SlugRelatedField(many=False, read_only=True, slug_field="email")
+    book = serializers.StringRelatedField()
 
     class Meta:
         model = Borrow

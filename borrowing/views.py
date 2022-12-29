@@ -20,7 +20,7 @@ class BorrowView(
     ]
 
     def get_serializer_class(self):
-        if self.action == "list":
+        if self.action == "retrieve":
             return BorrowListSerializer
         return BorrowSerializer
     
