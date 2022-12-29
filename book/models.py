@@ -11,3 +11,6 @@ class Book(models.Model):
     cover = models.BooleanField(choices=Enum.choices)
     inventory = models.PositiveIntegerField()
     daily_fee = models.DecimalField(max_digits=5, decimal_places=2)
+    
+    def __str__(self) -> str:
+        return f"Title: {self.title}, Author: {self.author}"
