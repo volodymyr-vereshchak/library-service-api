@@ -16,9 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework import routers
+
+from book.urls import router as book_router
+from borrowing.urls import router as borrow_router
+
+router = routers.DefaultRouter()
+router.registry.extend(book_router.registry)
+router.registry.extend(borrow_router.registry)
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("book.urls", namespace="book")),
     path("users/", include("user.urls", namespace="user")),
-    path("", include("borrowing.urls", namespace="borrow")),
+    path("", include(router.urls)),
 ]

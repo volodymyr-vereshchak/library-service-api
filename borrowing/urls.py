@@ -4,9 +4,5 @@ from rest_framework import routers
 
 from .views import BorrowView
 
-app_name = "borrow"
-
-router = routers.DefaultRouter()
+router = routers.SimpleRouter()
 router.register("borrowings", BorrowView)
-
-urlpatterns = [path("", include(router.urls))]
