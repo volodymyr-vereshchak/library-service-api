@@ -18,7 +18,7 @@ class BorrowSerializer(serializers.ModelSerializer):
             "book",
             "user",
         )
-        read_only_fields = ["user"]
+        read_only_fields = ["user", "actual_return_date"]
 
     def create(self, validated_data):
         book = Book.objects.get(id=validated_data["book"].id)
