@@ -8,6 +8,8 @@ from payment.payment import create_payment_session
 from payment.models import Payment
 from payment.serializers import PaymentSerializer
 from django.db import transaction
+from django.core.exceptions import ValidationError
+from datetime import date
 
 
 class BorrowSerializer(serializers.ModelSerializer):
@@ -40,6 +42,11 @@ class BorrowSerializer(serializers.ModelSerializer):
             bot.send_message(message)
             return borrow
         raise serializers.ValidationError("No requested book in the library!")
+
+    def validate(self, attrs):
+        if attrs["expected_return_date"] < date.today():
+            raise ValidationError("Return date can't be less then today date!")
+        return super().validate(attrs)
 
 
 class BorrowDetailSerializer(BorrowSerializer):
