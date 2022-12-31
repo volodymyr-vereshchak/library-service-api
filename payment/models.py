@@ -1,3 +1,19 @@
 from django.db import models
 
-# Create your models here.
+from borrowing.models import Borrow
+
+class Payment(models.Model):
+    class Status(models.IntegerChoices):
+        PENDING = 0
+        PAID = 1
+    
+    class Type(models.IntegerChoices):
+        PAYMENT = 0
+        FINE = 1
+    
+    status = models.BooleanField(choices=Status.choices)
+    type = models.BooleanField(choices=Type.choices)
+    borrowing = models.ForeignKey(Borrow, on_delete=models.CASCADE)
+    session_url = models.URLField(max_length=255)
+    session_id = models.CharField(max_length=255)
+    money_to_pay = models.DecimalField(max_digits=5, decimal_places=2)

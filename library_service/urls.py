@@ -20,10 +20,12 @@ from rest_framework import routers
 
 from book.urls import router as book_router
 from borrowing.urls import router as borrow_router
+from payment.urls import router as payment_router
 
 router = routers.DefaultRouter()
 router.registry.extend(book_router.registry)
 router.registry.extend(borrow_router.registry)
+router.registry.extend(payment_router.registry)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
