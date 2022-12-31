@@ -1,4 +1,4 @@
-![Logo of the project](library.jfif)
+![Logo of the project](library.png)
 
 # LIBRARY SERVICE API
 
