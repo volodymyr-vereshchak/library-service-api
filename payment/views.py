@@ -8,6 +8,11 @@ from .models import Payment
 
 
 class PaymentView(RetrieveModelMixin, ListModelMixin, GenericViewSet):
-    queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        current_user = self.request.user
+        if current_user.is_staff != True:
+            return Payment.objects.filter(borrowing__user=current_user)
+        return Payment.objects.all()
