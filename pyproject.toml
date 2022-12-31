@@ -19,6 +19,7 @@ django-celery-beat = "^2.4.0"
 redis = "^4.4.0"
 stripe = "^5.0.0"
 django-filter = "^22.1"
+psycopg2-binary = "^2.9.5"
 
 
 [build-system]
