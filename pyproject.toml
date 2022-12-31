@@ -18,6 +18,7 @@ celery = "^5.2.7"
 django-celery-beat = "^2.4.0"
 redis = "^4.4.0"
 stripe = "^5.0.0"
+django-filter = "^22.1"
 
 
 [build-system]

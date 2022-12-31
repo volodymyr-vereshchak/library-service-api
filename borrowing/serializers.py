@@ -6,6 +6,7 @@ from book.models import Book
 from .telegram import TelegramBot
 from payment.payment import create_payment_session
 from payment.models import Payment
+from payment.serializers import PaymentSerializer
 from django.db import transaction
 
 
@@ -21,8 +22,9 @@ class BorrowSerializer(serializers.ModelSerializer):
             "actual_return_date",
             "book",
             "user",
+            "payments"
         )
-        read_only_fields = ["user", "actual_return_date"]
+        read_only_fields = ["user", "actual_return_date", "payments"]
 
     @transaction.atomic
     def create(self, validated_data):
@@ -40,5 +42,6 @@ class BorrowSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError("No requested book in the library!")
 
 
-class BorrowListSerializer(BorrowSerializer):
+class BorrowDetailSerializer(BorrowSerializer):
     book = BookSerializer(many=False, read_only=True)
+    payments = PaymentSerializer(many=True, read_only=True)

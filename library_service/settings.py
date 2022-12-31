@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "borrowing",
     "django_celery_beat",
     "payment",
+    "django_filters"
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]
 }
 
 SIMPLE_JWT = {

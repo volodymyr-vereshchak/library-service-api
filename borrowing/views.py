@@ -5,11 +5,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .models import Borrow
-from .serializers import BorrowSerializer, BorrowListSerializer
+from .serializers import BorrowSerializer, BorrowDetailSerializer
 from book.models import Book
 from payment.payment import create_payment_session
 from payment.models import Payment
 from django.db import transaction
+from .filters import BorrowFilter, BorrowFilterAdmin
 
 
 class BorrowView(
@@ -21,10 +22,11 @@ class BorrowView(
     permission_classes = [
         IsAuthenticated,
     ]
+    filterset_class = BorrowFilter
 
     def get_serializer_class(self):
         if self.action == "retrieve":
-            return BorrowListSerializer
+            return BorrowDetailSerializer
         return BorrowSerializer
     
     def perform_create(self, serializer):
@@ -34,6 +36,7 @@ class BorrowView(
         current_user = self.request.user
         if current_user.is_staff != True:
             return Borrow.objects.filter(user=current_user)
+        self.filterset_class = BorrowFilterAdmin
         return Borrow.objects.all()
 
     @transaction.atomic
