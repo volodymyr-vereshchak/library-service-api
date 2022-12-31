@@ -156,3 +156,7 @@ CELERY_TIMEZONE = "Europe/Kiev"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+#Stripe settings
+PAYMENT_SECRET_KEY = os.getenv("PAYMENT_SECRET_KEY")
+FINE_MULTIPLIER = 5

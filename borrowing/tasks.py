@@ -6,7 +6,7 @@ from book.models import Book
 from user.models import User
 from .telegram import TelegramBot
 
-TOMORROW = tomorrow = date.today() + timedelta(days=1)
+TOMORROW = date.today() + timedelta(days=1)
 
 def check_overdue() -> list:
     overdue = Borrow.objects.filter(expected_return_date__lte=TOMORROW).values("book", "user", "expected_return_date")
