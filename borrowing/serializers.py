@@ -30,13 +30,18 @@ class BorrowSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
+        user = validated_data['user']
+        pending_payments = Payment.objects.filter(borrowing__user=user, status=0).count()
+        if pending_payments > 0:
+            raise serializers.ValidationError("You have pending payments already!")
         book = Book.objects.get(id=validated_data["book"].id)
         if book.inventory > 0:            
             book.inventory -= 1
             book.save()            
             borrow = super().create(validated_data)
-            create_payment_session(borrow, Payment.Type.PAYMENT)
-            message = f"{validated_data['user'].first_name} {validated_data['user'].last_name} "\
+            request = self.context["request"]
+            create_payment_session(borrow, Payment.Type.PAYMENT, request)
+            message = f"{user.first_name} {user.last_name} "\
             f"has successfuly borrowing '{book.title}' writting by {book.author} until {validated_data['expected_return_date']}"
             bot = TelegramBot()
             bot.send_message(message)

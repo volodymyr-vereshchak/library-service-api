@@ -3,6 +3,8 @@ from decimal import Decimal
 
 from datetime import date
 from django.conf import settings
+from django.urls import reverse
+from django.http import HttpRequest
 from borrowing.models import Borrow
 from .models import Payment
 
@@ -13,8 +15,11 @@ def calculate_payment(expected_return_date: date, actual_return_date: date, dail
     delta = actual_return_date - expected_return_date
     return Decimal(daily_fee * Decimal(delta.days) * settings.FINE_MULTIPLIER)
 
-def create_payment_session(borrow: Borrow, type: Payment.Type):
+def create_payment_session(borrow: Borrow, type: Payment.Type, request: HttpRequest):
     stripe.api_key = settings.PAYMENT_SECRET_KEY
+    url = reverse("payment-success-url")
+    success_url = request.build_absolute_uri(url)[:-1] + "?session_id={CHECKOUT_SESSION_ID}"
+    cancel_url = request.build_absolute_uri(reverse("payment-cancel-url"))
     money_to_pay = calculate_payment(borrow.expected_return_date, borrow.actual_return_date, borrow.book.daily_fee, type)
     session = stripe.checkout.Session.create(
         line_items=[{
@@ -28,8 +33,8 @@ def create_payment_session(borrow: Borrow, type: Payment.Type):
             'quantity': 1,
         }],
         mode='payment',
-        success_url='http://localhost:8000/payments/success?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url='http://localhost/payments/cancel',
+        success_url=success_url,
+        cancel_url=cancel_url,
     )
     
     Payment.objects.create(

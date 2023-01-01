@@ -35,7 +35,7 @@ class PaymentView(RetrieveModelMixin, ListModelMixin, GenericViewSet):
         payment = Payment.objects.get(session_id=session_id)
         payment.status = Payment.Status.PAID
         payment.save()
-        message = f"Transaction successfuly! ID: {payment.session_id}, sum: {payment.money_to_pay}$"
+        message = f"Transaction successfuly! Sum: {payment.money_to_pay}$"
         bot = TelegramBot()
         bot.send_message(message)
         return Response(data=f"Thanks, for your order!", status=status.HTTP_200_OK)
