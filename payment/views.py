@@ -10,6 +10,7 @@ from rest_framework import status
 
 from .serializers import PaymentSerializer
 from .models import Payment
+from borrowing.telegram import TelegramBot
 
 
 class PaymentView(RetrieveModelMixin, ListModelMixin, GenericViewSet):
@@ -34,6 +35,9 @@ class PaymentView(RetrieveModelMixin, ListModelMixin, GenericViewSet):
         payment = Payment.objects.get(session_id=session_id)
         payment.status = Payment.Status.PAID
         payment.save()
+        message = f"Transaction successfuly! ID: {payment.session_id}, sum: {payment.money_to_pay}$"
+        bot = TelegramBot()
+        bot.send_message(message)
         return Response(data=f"Thanks, for your order!", status=status.HTTP_200_OK)
 
     @action(
