@@ -28,3 +28,4 @@ You can test api on the next links:
 - For get notifications add to telegram group @library_mate
 - After borrowing book in payments you can pay you borrow (test card for pay 4242 4242 4242 4242; exp: 12/34; cvv: any three digits )
 - There is no celery worker on render (this is a paid service)
+- To test admin functionality use email: admin@mail.com password: library
