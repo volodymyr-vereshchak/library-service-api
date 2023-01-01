@@ -23,7 +23,7 @@ You can use payment system. For this need initialize your Stripe Payment account
 
 You can test api on the next links:
 
-- Heroes API: https://library-service-api.onrender.com/
+- Library API: https://library-service-api.onrender.com/
 - User API: https://library-service-api.onrender.com/users/ (/token/refresh)
 - For get notifications add to telegram group @library_mate
 - After borrowing book in payments you can pay you borrow (test card for pay 4242 4242 4242 4242; exp: 12/34; cvv: any three digits )
